@@ -1,12 +1,14 @@
-# GSHS TeX Society [경기과학고 TeX 사용자협회]
-http://gshslatexintro.github.io/
+﻿# 예시 문서 모음집
 
-https://www.facebook.com/gshstexsociety/
+## 시험범위 정리
+2015학년도 2학기 '국어와 생활'
+2015학년도 2학기 '영어논문작성법'
+2016학년도 1학기 '선형대수학'
 
-or Watch on GitHub
+## 레포트
+2015학년도 2학기 '미적분학I' 레포트
+2015학년도 2학기 '이산구조' 레포트
+2016학년도 1학기 '고급물리학I' 레포트
 
-or subscribe gshstexsociety@gmail.com
-
-**중요한 commit을 한 경우 `@gshstexsociety-bot` 와 같이 mention 해주세요.**
-
-Join Slack : https://gshstexsociety.slack.com
+## 프로젝트
+작곡작사동아리 '매나니' 화성학 강의
