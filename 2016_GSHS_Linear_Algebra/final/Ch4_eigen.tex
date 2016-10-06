@@ -1,0 +1,1180 @@
+\setcounter{chapter}{3}
+
+\chapter{Eigenvalues and Eigenvectors}
+\section{Introduction to Eigenvalues and Eigenspaces}
+
+\textit{Definition.} Let $A$ be an $n \times n$ matrix. A scalar $\lambda$ is called an \textbf{eigenvalue} of $A$ if there exists a nonzero vector $\textbf{x}$ such that $A\textbf{x} = \lambda\textbf{x}$. Such a vector $\textbf{x}$ is called an \textbf{eigenvector} of $A$ corresponding to $\lambda$. \\
+
+\textit{Definition.} Let $A$ be an $n \times n$ matrix and let $\lambda$ be an eigenvalue of $A$. The set of all eigenvectors corresponding to $\lambda$, together with the zero vector, is called the \textbf{eigenspace} of $\lambda$ and is denoted as $E_{\lambda}$.
+
+\section{Determinants}
+
+\textit{Definition.} $A_{ij}$ is the submatrix of a matrix $A$ obtained by deleting $i$th row and $j$th column from $A$. The determinant of such matrix is called the $(i, j)$-minor of $A$. 
+\\ The \textbf{(i, j)-cofactor} of $A$ is defined as $C_{ij} = (-1)^{i+j}$ det($A_{ij}$). \\
+
+\textit{Definition.} Let $A = [a_{ij}]$ be an $n \times n$ matrix, where $n \ge 2$. Then the \textbf{determinant} of $A$ is the scalar
+\begin{equation*}
+	\det A = \vert A \vert = \sum_{j=1}^{n}(-1)^{j+1}a_{1j} \det A_{1j} = \sum_{j=1}^{n}a_{1j}C_{1j}
+\end{equation*}
+
+\setcounter{theorem}{12}
+\begin{lemma}
+	Let $A$ be $n \times n$ matrix. Then
+	\begin{equation*}
+		\det{A} = \sum_{i=1}^{n}a_{i1}C_{i1} = \sum_{j=1}^{n}a_{1j}C_{1j}
+	\end{equation*}
+\end{lemma}
+\begin{proof}
+	We prove this lemma with mathematical induction. \\
+	
+	(i) $n = 2$ 
+	\begin{align*}
+		\det{A} = a_{11}C_{11} + a_{12}C_{12} = a_{11}a_{22} + a_{12}(-a_{21}) = a_{11}C_{11} + a_{21}C_{21}
+	\end{align*} \\
+	(ii) Suppose that the proposition is true for all $(n-1) \times (n-1)$ matrices. \\
+	For $n \times n$ matrix $A$,
+	\begin{align*}
+		\det{A} = \sum_{i=1}^{n}a_{i1}C_{i1} = \sum_{i=1}^{n}(-1)^{i+1}a_{i1}\det{A_{i1}}
+	\end{align*}
+	Since $A_{i1}$ is an $(n-1) \times (n-1)$ matrix,
+	\begin{align*}
+		&\sum_{i=1}^{n}(-1)^{i+1}a_{i1}\det{A_{i1}} 
+		\\ = & a_{11}C_{11} +  \sum_{i=2}^{n}[(-1)^{i+1}a_{i1}(\sum_{j=2}^{n}(-1)^{j+1}a_{1j}\det{A_{i1, 1j}})]
+		\\ = & a_{11}C_{11} + \sum_{j=2}^{n}[(-1)^{j+1}a_{1j}(\sum_{i=2}^{n}(-1)^{i+1}a_{i1}\det{A_{i1, 1j}})]
+		\\ = & \sum_{j=1}^{n}(-1)^{j+1}a_{1j}\det{A_{1j}} = \sum_{j=1}^{n} a_{1j}C_{1j}
+	\end{align*}
+	where $A_{ij, kl}$ stands for the minor matrix of $A$ obtained by deleting $i, k$th rows and $j, l$th columns from $A$. \\
+	
+	By (i) and (ii), The cofactor expansion along the first row and column of $A$ is equal to $\det{A}$.
+\end{proof}
+
+\setcounter{theorem}{0}
+\begin{theorem}[The Laplace Expansion Theorem]
+	The determinant of an \nbyn matrix $ A=\left[a_{ij}\right] $, where $ n\geq 2 $, can be computed as 
+	\begin{equation*}
+	\det A = \sum_{j=1}^{n}{a_{ij}C_{ij}}
+	\end{equation*}
+	(which is the \textbf{cofactor expansion along the ith row}) and also as
+	\begin{equation*}
+	\det A = \sum_{i=1}^{n}{a_{ij}C_{ij}}
+	\end{equation*}
+	(which is the \textbf{cofactor expansion along the jth column})
+\end{theorem}
+
+\begin{proof}
+	Let $A = [a_{ij}]$ be an $n \times n$ matrix. Let $B$ be the matrix obtained by moving $i$th row of $A$ to the top row using $i-1$ interchanges of adjacent rows. By Theorem 4.3(b), $\det A = (-1)^{i-1} \det B$.
+	Thus,
+	\begin{align*}
+		\det A &= (-1)^{i-1} \det B = (-1)^{i-1} \sum_{j=1}^{n} (-1)^{1+j} b_{1j} \det B_{1j} \\
+		&= (-1)^{i-1} \sum_{j=1}^{n} (-1)^{1+j} a_{ij} \det A_{ij} = \sum_{j=1}^{n} (-1)^{i+j} a_{ij} \det A_{ij}
+	\end{align*}
+	Therefore, the cofactor expansion along the rows of $A$ are equal to the determinant of $A$. \\
+	
+	\textbf{(Exercise 4.2 68)} By Lemma 4.13, the cofactor expansion along the first column is equal to $\det{A}$. With similar procedure, the cofactor expansion along the columns of $A$ are equal to the determinant of $A$.
+\end{proof}
+
+\begin{theorem}
+	The determinant of a triangular matrix is the product of the entries on its main diagonal. Specifically, if $ A=\left[a_{ij}\right] $ is an \nbyn triangular matrix, then $$ \det A = a_{11}a_{22}\cdots a_{nn} $$
+\end{theorem}
+\begin{proof}
+	\textbf{(Exercise 4.2 21)} We prove the theorem with mathematical induction. \\
+	
+	(i) $n = 2$ \\
+	For upper triangular $2 \times 2$ matrix $U = \begin{bmatrix}
+		u_{11} & u_{12} \\ 0 & u_{22}
+	\end{bmatrix}$, $\det{U} = u_{11}u_{22}$. \\
+	For lower triangular $2 \times 2$ matrix $L = \begin{bmatrix}
+		l_{11} & 0 \\ l_{21} & l_{22}
+	\end{bmatrix}$, $\det{L} = l_{11}l_{22}$. \\
+	
+	(ii) Suppose that the proposition is true for all $(n-1) \times (n-1)$ triangular matrices. \\
+	For \nbyn upper triangular matrix $U = [u_{ij}]$,
+	\begin{equation*}
+		\det{U} = \sum_{i=1}^{n}u_{i1}C_{i1} = u_{11}C_{11} = u_{11}u_{22}\cdots u_{nn}
+	\end{equation*}
+	For \nbyn lower triangular matrix $L = [l_{ij}]$,
+	\begin{equation*}
+		\det{L} = \sum_{j=1}^{n}l_{1j}C_{1j} = l_{11}C_{11} = l_{11}l_{22}\cdots l_{nn}
+	\end{equation*} \\
+	
+	By (i) and (ii), the determinant of a triangular matrix in any size is equal to the product of its diagonal entries.
+\end{proof}
+
+\begin{theorem}[Properties of Determinants]
+	Let $ A=\left[a_{ij}\right] $, $B = [b_{ij}]$, and $C = [c_{ij}]$ be a square matrices.
+	\begin{enumerate}
+		\item If $ A $ has a zero row (column), then $ \det A = 0 $.
+		\item \textbf{(Lemma 4.14)} If $ B $ is obtained by interchanging two rows (columns) of $ A $, then $ \det B = -\det A $.
+		\item If $ A $ has two identical rows (columns), then $ \det A = 0 $.
+		\item If $ B $ is obtained by multiplying a row (column) of $ A $ by $ k $, then $ \det B = k\det A $.
+		\item If $ A $, $ B $, and $ C $ are identical except that the ith row (column) of $ C $ is the sum of the ith rows (columns) of $ A $ and $ B $, then $ \det C = \det A + \det B $.
+		\item If $ B $ is obtained by adding a multiple of one row (column) of $ A $ to another row (column), then $ \det B = \det A $.
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	Let $A = [a_{ij}]$ be a \nbyn matrix.
+	\begin{enumerate}
+		\item \textbf{(Exercise 4.2 41)} Suppose that $i$th row of $A$ is a zero row. Then by Laplace Expansion Theorem,
+		\begin{equation*}
+			\det{A} = \sum_{j=1}^{n}a_{ij}C_{ij} = \sum_{j=1}^{n}0C_{ij} = 0
+		\end{equation*}
+		\item We first prove the case when two adjacent rows are interchanged by mathematical induction. \\
+		
+		(i) $n = 2$ \\
+		For $2 \times 2$ matrix $A = \begin{bmatrix}
+			a_{11} & a_{12} \\ a_{21} & a_{22}
+		\end{bmatrix}$, consider the determinant of $B = \begin{bmatrix}
+			a_{21} & a_{22} \\ a_{11} & a_{12}
+		\end{bmatrix}$, which is obtained by interchanging first and second rows of $A$. Then
+		\begin{equation*}
+			\det{A} = a_{11}a_{22} - a_{12}a_{21} = -(a_{12}a_{21} - a_{11}a_{22}) = -\det{B}
+		\end{equation*}
+		(ii) Suppose that the proposition is true for all $(n-1) \times (n-1)$ matrices. \\
+		Consider the determinant of $B$ which is obtained by interchanging $r$th and $(r+1)$th row of $A$, where $r \in \{1, 2, \cdots, n-1  \}$. By Laplace Expansion Theorem,
+		\begin{align*}
+			\det{B} &= \sum_{i \neq r, r+1}^{} (-1)^{i+1}b_{i1}\det{B_{i1}} + (-1)^{r+1}b_{r1}\det{B_{r1}} + (-1)^{(r+1)+1}b_{(r+1)1}\det{B_{(r+1)1}} \\
+			&= \sum_{i \neq r, r+1}^{} (-1)^{i+1}a_{i1}(-\det{A_{i1}}) + (-1)^{r+1}a_{(r+1)1}\det{A_{(r+1)1}} + (-1)^{(r+1)+1}a_{r1}\det{A_{r1}} \\
+			&= -\sum_{i=1}^{n}(-1)^{i+1}a_{i1}\det{A_{i1}} = -\det{A}
+		\end{align*}
+		By (i) and (ii), for square matrix $A$ in any size, if $B$ is obtained by interchanging two adjacent rows of $A$, $\det{B} = -\det{A}$. \\
+		
+		\textbf{(Exercise 4.2 67)} Suppose that $B$ is obtained by interchanging $r$th row and $s$th row $(r < s)$ of $A$. This operation is equivalent to following sequence of operations:
+		\begin{align*}
+			R_{r} \leftrightarrow R_{r+1}, R_{r+1} \leftrightarrow &R_{r+2}, \cdots, R_{s-1} \leftrightarrow R_{s}, \\ R_{s-2} \leftrightarrow R_{s-1}, &\cdots, R_{r} \leftrightarrow R_{r+1}
+		\end{align*}
+		which is $2(s-r)-1$ times of interchange between adjacent rows. Therefore, \begin{equation*}
+			\det{B} = (-1)^{2(s-r)-1}\det{A} = -\det{A}
+		\end{equation*}
+		\item Let $B$ be the matrix obtained by swapping two identical rows of $A$. Since $A = B$, $\det{A} = \det{B}$. By Theorem 4.3(b), $\det{A} = -\det{B}$. Therefore, $\det{A} = 0$.
+		\item Let $B$ be the matrix obtained by multiplying scalar $k$ to $i$th row of $A$, then $B_{ij} = A_{ij}$ for $j$ from $1$ to $n$. By Laplace Expansion Theorem, \begin{align*}
+			\det{B} &= \sum_{j=1}^{n}(-1)^{i+j}b_{ij}\det{B_{ij}} = \sum_{j=1}^{n}(-1)^{i+j}(ka_{ij})\det{A_{ij}} \\
+			&= k\sum_{j=1}^{n}(-1)^{i+j}a_{ij}\det{A_{ij}} = k\det{A}
+		\end{align*}
+		\item Since $A$, $B$, and $C$ are identical except for $i$th row, $A_{ij} = B_{ij} = C_{ij}$ for $j$ from $1$ to $n$. By Laplace Expansion Theorem,
+		\begin{align*}
+			\det{C} &= \sum_{j=1}^{n}(-1)^{i+j}c_{ij}\det{C_{ij}} = \sum_{j=1}^{n}(-1)^{i+j}(a_{ij} + b_{ij})\det{C_{ij}} \\
+			&= \sum_{j=1}^{n}(-1)^{i+j}a_{ij}\det{A_{ij}} + \sum_{j=1}^{n}(-1)^{i+j}b_{ij}\det{B_{ij}} = \det{A} + \det{B}
+		\end{align*}
+		\item \textbf{(Exercise 4.2 42)} Let $A = \begin{bmatrix}
+			\vdots \\ \textbf{A}_r \\ \vdots \\ \textbf{A}_s \\ \vdots
+		\end{bmatrix} $, and let $B = \begin{bmatrix}
+			\vdots \\ \textbf{A}_r \\ \vdots \\ \textbf{A}_s + k\textbf{A}_r \\ \vdots
+		\end{bmatrix}$, where $k$ is a scalar. By Theorem 4.3(e), \begin{equation*}
+			\det{B} = \det{A} + \begin{vmatrix}
+				\vdots \\ \textbf{A}_r \\ \vdots \\ k\textbf{A}_r \\ \vdots
+			\end{vmatrix}
+		\end{equation*}
+		By Theorem 4.3(c) and Theorem 4.3(d),
+		\begin{equation*}
+			\begin{vmatrix}
+			\vdots \\ \textbf{A}_r \\ \vdots \\ k\textbf{A}_r \\ \vdots
+			\end{vmatrix} = k\begin{vmatrix}
+			\vdots \\ \textbf{A}_r \\ \vdots \\ \textbf{A}_r \\ \vdots
+			\end{vmatrix} = k0 = 0
+		\end{equation*}
+		Therefore, $\det{B} = \det{A}$.
+	\end{enumerate}
+	Note that by Lemma 4.13, the proof above is also valid for columns of $A$.
+\end{proof}
+
+\begin{theorem}
+	Let $ E $ be an \nbyn elementary matrix.
+	\begin{enumerate}
+		\item If $ E $ results from interchanging two rows of $ I_{n} $, then $ \det E = -1$.
+		\item If $ E $ results from multiplying one row of $ I_{n} $ by $ k $, then $ \det E = k$.
+		\item If $ E $ results from adding a multiple of one row of $ I_{n} $ to another row, then $ \det E = 1 $.
+	\end{enumerate}
+\end{theorem}
+
+\textit{Note.} Theorem 4.4의 a, b, c 유형에 해당하는 elementary matrix를 구별하여 아래와 같이 쓰기로 하자. 새로운 정의니까, 이 notation을 쓰고 싶다면 증명하기 전에 꼭 언급하고 시작할 것.
+\begin{enumerate}
+	\item $E_{ij}$ is the elementary matrix resulting from interchanging $i$th row and $j$th row of $I$. ($i \neq j$)
+	\item $E_i(k)$ is the elementary matrix resulting from multiplying $i$th row of $I$ by a nonzero scalar $k$.
+	\item $E_{ij}(k)$ is the elementary matrix resulting from adding a multiple of $j$th row with $k$ to $i$th row of $I$.
+\end{enumerate}
+That is, \begin{align*}
+	&I \xrightarrow{R_i \leftrightarrow R_j} E_{ij} \\
+	&I \xrightarrow{kR_i} E_i(k) \\
+	&I \xrightarrow{R_i + kR_j} E_{ij}(k)
+\end{align*}
+
+\begin{proof}
+	Let $E$ be an \nbyn elementary matrix.
+	\begin{enumerate}
+		\item By Theorem 4.3(b),
+		\begin{equation*}
+			\det{E_{ij}} = -\det{I_n} = -1
+		\end{equation*}
+		\item By Theorem 4.3(d),
+		\begin{equation*}
+		\det{E_i(k)} = k\det{I_n} = k
+		\end{equation*}
+		\item By Theorem 4.3(f),
+		\begin{equation*}
+		\det{E_{ij}(k)} = \det{I_n} = 1
+		\end{equation*}
+	\end{enumerate}
+\end{proof}
+
+\begin{lemma}
+	Let $ B $ be an \nbyn matrix and let $ E $ be an \nbyn elementary matrix. Then $$ \det (EB) = \left(\det E\right)\left(\det B\right) $$
+\end{lemma}
+\begin{proof}
+	\textbf{(Exercise 4.2 43)} Let $B$ be an \nbyn matrix and let $E$ be an \nbyn elementary matrix. Consider the determinant of $EB$ with the type of elementary matrix. By Theorem 3.10, the elementary row operation which converts $I_n$ to $E$ also converts $B$ to $EB$. \\\\
+	(i) If $E = E_{ij}$ for some $i$ and $j$, $\det{E} = -1$ by Theorem 4.4(a). By Theorem 4.3(b), $\det{(EB)} = -\det{B} = (\det{E})(\det{B})$. \\\\
+	(ii) If $E = E_i(k)$ for some $i$ and $k$, $\det{E} = k$ by Theorem 4.4(b). By Theorem 4.3(d), $\det{(EB)} = k\det{B} = (\det{E})(\det{B})$. \\\\
+	(iii) If $E = E_{ij}(k)$ for some $i$, $j$, and $k$, $\det{E} = 1$ by Theorem 4.4(c). By Theorem 4.3(f), $\det{(EB)} = \det{B} = (\det{E})(\det{B})$.
+\end{proof}
+
+\begin{theorem}
+	A square matrix $ A $ is invertible if and only if $ \det A\neq 0 $.
+\end{theorem}
+\begin{proof}
+	Let $R$ be RREF of $A$. Then there exist elementary matrices $E_1, \cdots, E_k$ such that \begin{equation*}
+		R = (E_k\cdots E_2E_1)A
+	\end{equation*}
+	By Lemma 4.5, \begin{equation*}
+		\det{R} = (\det{E_k})\cdots(\det{E_2})(\det{E_1})(\det{A})
+	\end{equation*}
+	Note that Theorem 4.4 states the determinant of elementary matrices cannot be zero. Thus, $\det{R} \neq 0$ if and only if $\det{A} \neq 0$. Since $\det{R} \neq 0$ if and only if $R = I$, $\det{A} \neq 0$ if and only if $A$ is invertible by F.T.I.M.
+\end{proof}
+
+\begin{theorem}
+	If $ A $ is an \nbyn matrix, then $$ \det(kA) = k^{n}\det A $$.
+\end{theorem}
+\begin{proof}
+	\textbf{(Exercise 4.2 44)} Let $A = \begin{bmatrix}
+		\textbf{a}_1 & \textbf{a}_2 & \cdots & \textbf{a}_n
+	\end{bmatrix}$ be a \nbyn matrix and $k$ be a scalar. By Theorem 4.3(d),
+	\begin{align*}
+		\det{kA} &= \begin{vmatrix}
+			k\textbf{a}_1 & k\textbf{a}_2 & \cdots & k\textbf{a}_n
+		\end{vmatrix} \\
+		&= k\begin{vmatrix}
+			\textbf{a}_1 & k\textbf{a}_2 & \cdots & k\textbf{a}_n
+		\end{vmatrix} \\
+		& \vdots \\
+		&= k^n\begin{vmatrix}
+			\textbf{a}_1 & \textbf{a}_2 & \cdots & \textbf{a}_n
+		\end{vmatrix} = k^n\det{A}
+	\end{align*}
+\end{proof}
+
+\begin{theorem}
+	If $ A $ and $ B $ are \nbyn matrices, then $$ \det (AB) = \left(\det A\right)\left(\det B\right) $$
+\end{theorem}
+\begin{proof}
+	Let $A$ and $B$ be \nbyn matrices. \\
+	
+	(i) If $A$ is invertible, then $A$ is a product of elementary matrices, by F.T.I.M. So there exist elementary matrices $E_1, E_2, \cdots, E_k$ such that $A = E_1E_2\cdots E_k$. By Lemma 4.5,
+	\begin{align*}
+		\det{(AB)} &= \det{(E_1E_2\cdots E_kB)} = (\det{E_1})(\det{E_2})\cdots(\det{E_k})(\det{B}) \\
+		&= (\det{(E_1E_2\cdots E_k)})(\det{B}) = (\det{A})(\det{B})
+	\end{align*} \\
+	
+	(ii) If $A$ is not invertible, then $\det{A} = 0$ by Theorem 4.6. By Exercise 3.3 47 (For square matrices $A$ and $B$, if $AB$ is invertible, then $A$ and $B$ are both invertible.) $AB$ is also not invertible, so $\det{(AB)} = 0$ by Theorem 4.6. Therefore, $\det{(AB)} = (\det{A})(\det{B}) = 0$.
+\end{proof}
+
+\begin{theorem}
+	If $ A $ is invertible, then $$ \det\inv{A} = \dfrac{1}{\det A}$$
+\end{theorem}
+\begin{proof}
+	Let $A$ be a invertible matrix. By Theorem 4.8, ($\det{A})(\det{\inv{A}}) = \det{I} = 1$ since $A\inv{A} = I$. By Theorem 4.6, $A$ is invertible so $\det{A} \neq 0$. Therefore, \begin{equation*}
+		\det{\inv{A}} = \frac{1}{\det{A}}
+	\end{equation*}
+\end{proof}
+
+\textbf{Lemma : Theorem 4.10 for Elementary Matrices} \\
+If $E$ is an elementary matrix, then \begin{equation*}
+	\det{E} = \det{E^T}
+\end{equation*}
+
+\begin{proof}
+	(i) Since $E_{ij}^T = E_{ij}$, $\det{E_{ij}} = \det{E_{ij}^T}$. \\
+	
+	(ii) Since $(E_{i}(k))^T = E_i(k)$e, $\det{E_{i}(k)} = \det{(E_{i}(k))^T}$. \\
+	
+	(iii) Since $(E_{ij}(k))^T = E_{ji}(k)$, $\det{(E_{ij}(k))^T} = \det{E_{ji}(k)} = 1 = \det{E_{ij}(k)}$.
+\end{proof}
+
+\begin{theorem}
+	For any square matrix $ A $, $$ \det A = \det A^{T} $$
+\end{theorem}
+\begin{proof}
+	(i) Suppose that $A$ is an invertible matrix. By F.T.I.M, $A$ is a product of elementary matrices. Let $E_1, E_2, \cdots, E_k$ be the elementary matrices whose product is $A$. Then by the lemma above, \begin{align*}
+		\det{A^T} &= \det{({E_k}^T\cdots {E_2}^T{E_1}^T)} = (\det{E_k^T})\cdots(\det{E_2^T})(\det{E_1^T}) \\
+		&= (\det{E_k})\cdots(\det{E_2})(\det{E_1}) = \det{(E_1E_2\cdots E_k)} = \det{A}
+	\end{align*}
+	(ii) If $A$ is not invertible, then $A^T$ is also not invertible. Therefore, by Theorem 4.6, \begin{equation*}
+		\det{A} = 0 = \det{A^T}
+	\end{equation*}
+\end{proof}
+
+We denote the matrix obtained by replacing $i$th column of $A$ by $\textbf{x}$ as $A_i(\textbf{x})$.
+
+\begin{theorem}[Cramer's Rule]
+	Let $ A $ be an invertible \nbyn matrix and let $ \textbf{b} $ be a vector in \Rn. Then the unique solution $ \textbf{x} $ of the system $ A\textbf{x}=\textbf{b} $ is given by
+	\begin{center}
+		$ x_{i} = \dfrac{\det (A_{i}(\textbf{b})) }{\det A} $ for $ i = 1, \cdots , n $
+	\end{center}
+\end{theorem}
+\begin{proof}
+	Let $A$ be an invertible \nbyn matrix, and $\textbf{b}$ be a vector in \Rn. \\
+	Let $\textbf{x}$ be a vector in $\mathbb{R}^n$ such that $A\textbf{x} = A\begin{bmatrix}
+	x_1 \\ \vdots \\ x_n
+	\end{bmatrix} = \textbf{b}$.  For $i = 1, 2, \cdots, n$,
+	\begin{align*}
+		AI_i(\textbf{x}) = A\begin{bmatrix}
+			\textbf{e}_1 & \cdots & \textbf{x} & \cdots & \textbf{e}_n
+		\end{bmatrix} &= \begin{bmatrix}
+			A\textbf{e}_1 & \cdots & A\textbf{x} & \cdots & A\textbf{e}_n
+		\end{bmatrix} \\ &= \begin{bmatrix}
+			A\textbf{e}_1 & \cdots & \textbf{b} & \cdots & A\textbf{e}_n
+		\end{bmatrix} = A_i(\textbf{b})
+	\end{align*}
+	Then, by Laplace Expansion Theorem, \begin{align*}
+		\det{A_i(\textbf{b})} = (\det{A})(\det{I_i(\textbf{x})}) &= (\det{A})\begin{vmatrix}
+			1 & 0 & \cdots & x_1 & \cdots & 0 & 0 \\
+			0 & 1 & \cdots & x_2 & \cdots & 0 & 0 \\
+			\vdots & \vdots & & \vdots & & \vdots & \vdots \\
+			{\color{red}0} & {\color{red}0} & {\color{red}\cdots} & {\color{red}x_i} & {\color{red}\cdots} & {\color{red}0} & {\color{red}0} \\
+			\vdots & \vdots & & \vdots & & \vdots & \vdots \\
+			0 & 0 & \cdots & x_{n-1} & \cdots & 1 & 0 \\
+			0 & 0 & \cdots & x_n & \cdots & 0 & 1 \\
+		\end{vmatrix} \\
+		&= (\det{A})(x_i\det{I_{n-1}}) = x_i\det{A}
+	\end{align*}
+	\begin{equation*}
+		\therefore x_i = \frac{\det{(A_i(\textbf{b})))}}{\det{A}}
+	\end{equation*}
+\end{proof}
+
+\textit{Definition.} The \textbf{adjoint} of a square matrix $A$ is denoted by \textbf{adj(A)} and defined as \begin{equation*}
+	\adj{A} = [C_{ji}] = \begin{bmatrix}
+		C_{11} & \cdots & C_{n1} \\
+		\vdots & & \vdots \\
+		C_{1n} & \cdots & C_{nn}
+	\end{bmatrix}
+\end{equation*}
+
+\begin{theorem}
+	Let $ A $ be an invertible \nbyn matrix. Then $$ \inv{A}=\dfrac{1}{\det{A}}\adj{A} $$
+\end{theorem}
+\begin{proof}
+	Since $A\inv{A} = I_n$, the $i$th column of $\inv{A}$ satisfies the equation $A\textbf{x} = \textbf{e}_i$. By Cramer's Rule, $(\inv{A})_i^C$ the $i$th column of $\inv{A}$, is given as \begin{equation*}
+		(\inv{A})_i^C = \begin{bmatrix}
+			\frac{\det{A_1(\textbf{e}_i)}}{\det{A}} \\
+			\vdots \\
+			\frac{\det{A_n(\textbf{e}_i)}}{\det{A}}
+		\end{bmatrix}
+	\end{equation*}
+	Since $\det{A_j(\textbf{e}_i)} = C_{ij}$, \begin{equation*}
+		(\inv{A})_i^C = \frac{1}{\det{A}}\begin{bmatrix}
+			C_{i1} \\ \vdots \\ C_{in}
+		\end{bmatrix}
+	\end{equation*}
+	Therefore, \begin{equation*}
+		\inv{A} = \frac{1}{\det{A}}\begin{bmatrix}
+			C_{11} & C_{21} & \cdots & C_{n1} \\
+			C_{12} & C_{22} & \cdots & C_{n2} \\
+			\vdots & \vdots &        & \vdots \\
+			C_{1n} & C_{2n} & \cdots & C_{nn}
+		\end{bmatrix} = \frac{1}{\det{A}}\adj{A}
+	\end{equation*}
+\end{proof}
+
+\begin{plaintheorem}
+	Let $A$ be an $n \times n$ matrix. Then \begin{equation*}
+		(\adj{A})A = A(\adj{A})=(\det{A})I_n
+	\end{equation*}
+\end{plaintheorem}
+\begin{proof}
+	Let $A = [a_{ij}]$ be an $n \times n$ matrix. Consider each entries of $A(\adj{A})$ and $(\adj{A})A$. \\
+	
+	First we compute the diagonal entries of $A(\adj{A})$ and $(\adj{A})A$. The $i$th diagonal entry of $A(\adj{A})$ is given as \begin{align*}
+		[A(\adj{A})]_{ii} = \sum_{k=1}^{n}a_{ik}(\adj{A})_{ki} = \sum_{k=1}^{n}a_{ik}C_{ik}
+	\end{align*}
+	which is a cofactor expansion along the $i$th row. Also, the $i$th diagonal entry of $(\adj{A})A$ is given as \begin{equation*}
+		[(\adj{A})A]_{ii} = \sum_{k=1}^{n}(\adj{A})_{ik}a_{ki} = \sum_{k=1}^{n}a_{ki}C_{ki}
+	\end{equation*} which is a cofactor expansion along the $i$th column. Therefore, $[(\adj{A})A]_{ii} = [A(\adj{A})]_{ii} = \det{A}$ by the Laplace Expansion Theorem. \\
+	
+	Now consider the non-diagonal entries of $A(\adj{A})$ and $(\adj{A})A$. The $(i,j)$ entry of $A(\adj{A})$ is \begin{align*}
+		[A(\adj{A})]_{ij} = \sum_{k=1}^{n}a_{ik}(\adj{A})_{kj} = \sum_{k=1}^{n}a_{ik}C_{jk}, i \neq j
+	\end{align*}
+	This is the cofactor expansion along the $j$th row of the matrix obtained by replacing the $j$th row by the $i$th row of $A$. The $(i, j)$ entry of $(\adj{A})A$ is \begin{equation*}
+		[(\adj{A})A]_{ij} = \sum_{k=1}^{n}(\adj{A})_{ik}a_{kj} = \sum_{k=1}^{n}a_{kj}C_{ki}
+	\end{equation*} This is the cofactor expansion along the $i$th column of the matrix obtained by replacing the $i$th column by the $j$th column of $A$. Therefore, $[A(\adj{A})]_{ij} = [(\adj{A})A]_{ij} = 0$, since such matrices has two identical rows. \\
+	
+	Consequently, we have \begin{equation*}
+		[(\adj{A})A]_{ij} = [A(\adj{A})]_{ij} = \begin{cases}
+			\det{A} \mbox{ , $i = j$ } \\
+			0 \mbox{ , $i \neq j$ }
+		\end{cases}
+	\end{equation*} thus $(\adj{A})A = A(\adj{A}) = (\det{A})I_n$.
+\end{proof}
+{\color{blue}$A$가 invertible하지 않아도 성립한다는 점에서 Theorem 4.12의 확장이라고 할 수 있다.}
+
+\section{Eigenvalues and Eigenvectors of \nbyn Matrices}
+\setcounter{theorem}{14}
+
+\textit{Definition.} The \textbf{characteristic polynomial} of $A$ is defined as $\det{(A-\lambda I)}$, which is a polynomial in $\lambda$. The \textbf{characteristic equation} of $A$ is defined as $\det{(A - \lambda I)} = 0$. The solution of characteristic equation of a matrix is the eigenvalue of the matrix. \\
+
+\textit{Definition.} The \textbf{algebraic multiplicity} of an eigenvalue is the multiplicity of it as a root of the characteristic equation. In other words, the algebraic multiplicity of an eigenvalue $\lambda_0$ is the degree of $(\lambda - \lambda_0)$ in the characteristic equation. \\
+
+\textit{Definition.} The \textbf{geometric multiplicity} of an eigenvalue is the dimension of eigenspace corresponding to it ($\dim{E_\lambda}$).
+
+\begin{theorem}
+	The eigenvalues of a triangular matrix are the entries on its main diagonal.
+\end{theorem}
+\begin{proof}
+	Let $A$ be a \nbyn triangular matrix. Since $A-\lambda I$ is also a triangular matrix, by Theorem 4.2, the characteristic equation of $A$ is \begin{equation*}
+		\det{(A - \lambda I)} = (a_{11} - \lambda)(a_{22} - \lambda)\cdots(a_{nn} - \lambda) = 0
+	\end{equation*}
+	Therefore, the diagonal entries $a_{11}, a_{22}, \cdots, a_{nn}$ are eigenvalues of $A$, since they are solutions of the characteristic equation.
+\end{proof}
+
+\begin{theorem}
+	A square matrix $ A $ is invertible if and only if 0 is \textit{not} an eigenvalue of $ A $.
+\end{theorem}
+\begin{proof}
+	By Theorem 4.6, $A$ is not invertible if and only if $\det{A} = \det{(A - 0I)} = 0$. Since the eigenvalues of $A$ are solutions of the characteristic equation $\det{(A - \lambda I)} = 0$, $\det{(A - 0I)} = 0$ if and only if 0 is an eigenvalue of $A$.
+\end{proof}
+
+\begin{theorem} [The Fundamental Theorem of Invertible Matrices : Version 3]
+	Let $A$ be an $n \times n$ matrix. The following propositions are equivalent:
+	\begin{enumerate}
+		\item $A$ is invertible.
+		\item $A\textbf{x} = \textbf{b}$ has a unique solution for every $\textbf{b} \in$ \Rn.
+		\item $A\textbf{x} = \textbf{0}$ has only the trivial solution.
+		\item The RREF of $A$ is $I_n$.
+		\item $A$ is a product of elementary matrices.
+		\item rank($A$) = $n$
+		\item nullity($A$) = $0$
+		\item The columns of $A$ are linearly independent.
+		\item The columns of $A$ span \Rn.
+		\item The columns of $A$ form a basis for \Rn.
+		\item The rows of $A$ are linearly independent.
+		\item The rows of $A$ span \Rn.
+		\item The rows of $A$ form a basis for \Rn.
+		\item $ \det A \neq 0 $
+		\item 0 is not an eigenvalue of $ A $.
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	(a $\Leftrightarrow$ n) Theorem 4.6. \\
+	(a $\Leftrightarrow$ o) Theorem 4.16.
+\end{proof}
+
+\begin{theorem}
+	Let $ A $ be a square matrix with eigenvalue $ \lambda $ and corresponding eigenvector $ \textbf{x} $.
+	\begin{enumerate}
+		\item For any positive integer $ n $, $ \lambda^{n} $ is an eigenvalue of $ A^{n} $ with corresponding eigenvector $ \textbf{x} $.
+		\item If $ A $ is invertible, then $ 1/\lambda $ is an eigenvalue of $ \inv{A} $ with corresponding eigenvector $ \textbf{x} $. 
+		\item If $ A $ is invertible, then for any integer $ n $, $ \lambda^{n} $ is an eigenvalue of $ A^{n} $ with corresponding eigenvector $ \textbf{x} $.
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	Let $A$ be a square matrix and let $\lambda$ be an eigenvalue of $A$, and $\textbf{x}$ be an eigenvector corresponding to $\lambda$. Then $A\textbf{x} = \lambda\textbf{x}$ and $\textbf{x} \neq \textbf{0}$.
+	\begin{enumerate}
+		\item We prove the proposition by mathematical induction. \\
+		
+		(i) $n = 1$ \\
+		Trivially, $\lambda$ is an eigenvalue of $A$. \\
+		
+		(ii) Suppose that the proposition is true if $n = k \mbox{ } (k \in \mathbb{N})$. Since $\lambda^{k}$ is an eigenvalue of $A^{k}$ with corresponding eigenvector $\textbf{x}$, \begin{equation*}
+			A^{k+1}\textbf{x} = (AA^{k})\textbf{x} = A(A^{k}\textbf{x}) = A(\lambda^{k}\textbf{x}) = \lambda^{k}(A\textbf{x}) = \lambda^{k+1}\textbf{x}
+		\end{equation*}
+		Thus, $\lambda^{k+1}$ is an eigenvalue of $A^{k+1}$ with corresponding eigenvector $\textbf{x}$. \\
+		
+		By (i) and (ii), for all positive integer $n$, $\lambda^n$ is an eigenvalue of $A^n$ with corresponding eigenvector $\textbf{x}$.
+		
+		\item\textbf{(Exercise 4.3 13)} Suppose that $A$ is an invertible matrix. Since $A\textbf{x} = \lambda\textbf{x}$, \begin{equation*}
+			\textbf{x} = I\textbf{x} = (\inv{A}A)\textbf{x} = \inv{A}(A\textbf{x}) = \inv{A}(\lambda\textbf{x}) = \lambda(\inv{A}\textbf{x})
+		\end{equation*} 
+		Since $A$ is invertible, by F.T.I.M, $\lambda \neq 0$. \begin{equation*}
+			\therefore \inv{A}\textbf{x} = \frac{1}{\lambda}\textbf{x}
+		\end{equation*}
+		Therefore, $1/\lambda$ is an eigenvalue of $\inv{A}$ with corresponding eigenvector $\textbf{x}$.
+		
+		\item \textbf{(Exericse 4.3 14)} \\
+		(i) $n > 0$, Theorem 4.18(a) gives the proof. \\
+		(ii) $n = 0$, $A^0 = I$, so $I\textbf{x} = \textbf{x} = \lambda^0\textbf{x}$. \\
+		(iii) $n < 0$, Since $A^n = (\inv{A})^{-n}$, Theorem 4.18(a) and Theorem 4.18(b) gives the proof.
+	\end{enumerate}
+\end{proof}
+
+\begin{theorem}
+	Suppose the \nbyn matrix $ A $ has eigenvectors $\textbf{v}_1, \cdots, \textbf{v}_m$ with \lamm. If $ \textbf{x} $ is a vector in $\mathbb{R}^n$ that can be expressed as a linear combination of these eigenvectors so that scalars $c_1, c_2, \cdots, c_m$ exist such that
+	$$ \textbf{x}=c_{1}\textbf{v}_{1} + c_{2}\textbf{v}_{2} + \cdots +  c_{m}\textbf{v}_{m} $$
+	then, for any integer $ k $, 
+	$$ A^{k}\textbf{x}=c_{1}\lambda_{1}^{k}\textbf{v}_{1} + c_{2}\lambda_{2}^{k}\textbf{v}_{2} + \cdots + c_{m}\lambda_{m}^{k}\textbf{v}_{m}$$
+\end{theorem}
+\begin{proof}
+	\textbf{(Exercise 4.3 42)} Let $A$ be an \nbyn matrix and let $\lambda_1, \cdots, \lambda_m$ be eigenvalues of $A$ with corresponding eigenvectors $\textbf{v}_1, \cdots, \textbf{v}_m$. Suppose that there exist scalars $c_1, \cdots, c_m$ such that \begin{equation*}
+		\textbf{x} = c_1\textbf{v}_1 + \cdots + c_m\textbf{v}_m
+	\end{equation*}
+	For any integer $k$, \begin{equation*}
+		A^k\textbf{x} = A^k(c_1\textbf{v}_1 + \cdots + c_m\textbf{v}_m) = c_1(A^k\textbf{v}_1) + \cdots + c_m(A^k\textbf{v}_m)
+	\end{equation*}
+	By Theorem 4.18(c), $\lambda_i^k$ is an eigenvalue of $A^k$ with corresponding eigenvector $\textbf{v}_i$ for $i$ from 1 to $m$. Therefore, \begin{equation*}
+		c_1(A^k\textbf{v}_1) + \cdots + c_m(A^k\textbf{v}_m) =
+		c_1\lambda_1^k\textbf{v}_1 + \cdots + c_m\lambda_m^k\textbf{v}_m
+	\end{equation*}
+\end{proof}
+
+\begin{theorem}
+	Let $ A $ be an \nbyn matrix and let $\lambda_1, \cdots, \lambda_m$ be distinct eigenvalues of $ A $ with corresponding eigenvectors \vm. Then $\textbf{v}_1, \cdots, \textbf{v}_m$ are linearly independent.
+\end{theorem}
+\begin{proof}
+	Suppose that $\textbf{v}_1, \cdots, \textbf{v}_m$ are linearly dependent. Then one of the vectors can be expressed as a linear combination of the previous vectors. Let $\textbf{v}_{k}$ be the first of such vectors. Then there exist scalars $c_1, c_2, \cdots, c_{k-1}$ such that \begin{equation*}
+		\textbf{v}_{k} = c_1\textbf{v}_1 + c_2\textbf{v}_2 + \cdots + c_{k-1}\textbf{v}_{k-1}
+	\end{equation*}
+	Since $\textbf{v}_1, \cdots, \textbf{v}_m$ are eigenvectors of $A$ with corresponding eigenvalue $\lambda_1, \lambda_2, \cdots, \lambda_{m}$, \begin{align*}
+		\lambda_{k}\textbf{v}_{k} = A\textbf{v}_{k} &= A(c_1\textbf{v}_1 + c_2\textbf{v}_2 + \cdots + c_{k-1}\textbf{v}_{k-1}) \\
+		&= c_1(A\textbf{v}_1) + c_2(A\textbf{v}_2) + \cdots + c_{k-1}(A\textbf{v}_{k-1}) \\
+		&= c_1\lambda_1\textbf{v}_1 + c_2\lambda_2\textbf{v}_2 + \cdots + c_{k-1}\lambda_{k-1}\textbf{v}_{k-1}
+	\end{align*}
+	Since $\lambda_{k}\textbf{v}_k = c_1\lambda_{k}\textbf{v}_1 + \cdots + c_{k-1}\lambda_{k-1}\textbf{v}_{k-1}$, \begin{align*}
+		c_1(\lambda_1 - \lambda_k)\textbf{v}_1 + c_2(\lambda_2 - \lambda_k)\textbf{v}_2 + \cdots + c_{k-1}(\lambda_{k-1} - \lambda_k)\textbf{v}_{k-1} = \lambda_k\textbf{v}_k - \lambda_k\textbf{v}_k = \textbf{0}
+	\end{align*}
+	Since the vectors $\textbf{v}_1, \cdots, \textbf{v}_{k-1}$ are linearly independent (remind that $\textbf{v}_k$ was the `first' vector to be expressed as the linear combination of other vectors), $c_1(\lambda_1 - \lambda_k) = \cdots = c_{k-1}(\lambda_{k-1} - \lambda_k) = 0$. The eignevalues are distinct, thus $c_1 = c_2 = \cdots = c_{k-1} = 0$. Therefore, $\textbf{v}_k = \textbf{0}$. \\
+	
+	It's a contradiction since eigenvectors cannot be a zero vector. Therefore, $\textbf{v}_1, \cdots, \textbf{v}_m$s are linearly independent.
+\end{proof}
+
+\section{Similarity and Diagonalization}
+\textit{Definition.} Let $A$ and $B$ be \nbyn matrices. We say that \textbf{A is similar to B} if there exists an invertible \nbyn matrix $P$ such that $\inv{P}AP = B$. We denote this as $A \sim B$.
+
+\begin{theorem}
+	Let $ A $, $ B $, and $ C $ be \nbyn matrices.
+	\begin{enumerate}
+		\item $ A \sim A $ (Reflectivity, 반사율)
+		\item If $ A \sim B $, then $ B \sim A $. (Symmetricity, 대칭률)
+		\item If $ A\sim B $ and $ B\sim C $, then $ A\sim C $. (Transitivity, 추이율)
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	Let $A$, $B$, and $C$ be \nbyn matrices.
+	\begin{enumerate}
+		\item $A = \inv{I_n}AI_n$, therefore $A \sim A$.
+		\item If $A \sim B$, there exists an invertible \nbyn matrix $P$ such that $B = \inv{P}AP$. Then $A = PB\inv{P} = \inv{(\inv{P})}B\inv{P}$, therefore $B \sim A$.
+		\item \textbf{(Exercise 4.4 30)} If $A \sim B$ and $B \sim C$, there exist invertible \nbyn matrices $P_1, P_2$ such that $B = \inv{P_1}AP_1$ and $C = \inv{P_2}BP_2$. Then $C = \inv{P_2}BP_2 = \inv{P_2}(\inv{P_1}AP_1)P_2 = \inv{(P_1P_2)}A(P_1P_2)$. Therefore, $A \sim C$.
+	\end{enumerate}
+\end{proof}
+
+\begin{theorem}
+	Let $ A $ and $ B $ be \nbyn matrices with $ A\sim B $. Then 
+	\begin{enumerate}
+		\item $ \det A = \det B $
+		\item $ A $ is invertible if and only if $ B $ is invertible.
+		\item $ A $ and $ B $ have the same rank. 
+		\item $ A $ and $ B $ have the same characteristic polynomial.
+		\item $ A $ and $ B $ have the same eigenvalues.
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	Let $A$ and $B$ be \nbyn matrices such that $A \sim B$. Then there exists an invertible \nbyn matrix $P$ such that $B = \inv{P}AP$.
+	\begin{enumerate}
+		\item \begin{equation*}
+			\det{B} = \det{(\inv{P}AP)} = \det\inv{P}\det{A}\det{P} = \frac{1}{\det{P}}\det{A}\det{P} = \det{A}
+		\end{equation*}
+		\item \textbf{(Exercise 4.4 31)} By Theorem 4.22(a), $\det{A} = \det{B}$. By F.T.I.M, $A$ is invertible if and only if $\det{A} \neq 0$, and so as $B$. Therefore, $A$ is invertible if and only if $B$ is invertible.
+		\item \textbf{(Exercise 4.4 32)} Since $B = \inv{P}AP$, rank($B$) = rank($\inv{P}AP$) $\leq$ rank($A$) ($\because$ Exercise 3.5 59, 60) Similarly, rank($A$) = rank($PB\inv{P}$) $\leq$ rank($B$). Therefore, rank($A$) = rank($B$).
+		\item \begin{align*}
+			\det{(B - \lambda I)} &= \det{(\inv{P}AP - \lambda I)} \\
+			&= \det{(\inv{P}AP - \inv{P}(\lambda I)P)} = \det{(\inv{P}(A - \lambda I)P)} = \det(A - \lambda I)
+		\end{align*}
+		\item \textbf{(Exercise 4.4 33)} Since $A$ and $B$ have same characteristic polynomial and characteristic equation, the eigenvalues of $A$ and $B$ should have the same eigenvalues.
+	\end{enumerate}
+\end{proof}
+
+\textit{Note.} $A \sim B$ 일때 tr($A$) = tr($B$) 도 성립한다. Exercise 4.3 40 참고. \\
+
+\textit{Definition.} An \nbyn matrix $A$ is \textbf{diagonalizable} if there exists a diagonal \nbyn matrix $D$ such that $A \sim D$, that is there exists an invertible \nbyn matrix $P$ which satisfies $\inv{P}AP = D$.
+
+\begin{theorem}
+	Let $ A $ be \nbyn matrix. Then $ A $ is diagonalizable if and only if $ A $ has $ n $ linearly independent eigenvectors. 
+	
+	More precisely, there exist an invertible matrix $ P $ and diagonal matrix $ D $ such that $ \inv{P}AP=D $ if and only if the columns of $ P $ are $ n $ linearly independent eigenvectors of $ A $ and the diagonal entries of $ D $ are the eigenvalues of $ A $ corresponding to the eigenvectors in $ P $ in the same order.
+\end{theorem}
+\begin{proof}
+	($\Rightarrow$) Suppose that $A$ is diagonalizable, then there exists a diagonal matrix $D = \begin{bmatrix}
+		\lambda_1 & 0 & \cdots & 0 \\
+		0 & \lambda_2 & \cdots & 0 \\
+		\vdots & \vdots & & \vdots \\
+		0 & 0 & \cdots & \lambda_n
+	\end{bmatrix}$ and invertible matrix $P = \begin{bmatrix}
+		\textbf{p}_1 & \textbf{p}_2 & \cdots & \textbf{p}_n
+	\end{bmatrix}$ such that $\inv{P}AP = D$.
+	Since $AP = PD$, \begin{align*}
+		AP &= A\begin{bmatrix}
+			\textbf{p}_1 & \textbf{p}_2 & \cdots & \textbf{p}_n
+		\end{bmatrix} = \begin{bmatrix}
+			A\textbf{p}_1 & A\textbf{p}_2 & \cdots & A\textbf{p}_n
+		\end{bmatrix} \\
+		&= PD = \begin{bmatrix}
+			\textbf{p}_1 & \textbf{p}_2 & \cdots & \textbf{p}_n
+		\end{bmatrix}\begin{bmatrix}
+			\lambda_1 & 0 & \cdots & 0 \\
+			0 & \lambda_2 & \cdots & 0 \\
+			\vdots & \vdots & & \vdots \\
+			0 & 0 & \cdots & \lambda_n
+		\end{bmatrix} = \begin{bmatrix}
+			\lambda_1\textbf{p}_1 & \lambda_2\textbf{p}_2 & \cdots & \lambda_n\textbf{p}_n
+		\end{bmatrix}
+	\end{align*}
+	Thus $A\textbf{p}_1 = \lambda_1 \textbf{p}_1, A\textbf{p}_2 = \lambda_2 \textbf{p}_2, \cdots, A\textbf{p}_n = \lambda_n\textbf{p}_n$. Also, none of $\textbf{p}_1, \cdots, \textbf{p}_n$ is nonzero since $P$ is an invertible matrix. Therefore, $\textbf{p}_1, \cdots, \textbf{p}_n$ are eigenvectors of $A$ with corresponding eigenvalues $\lambda_1, \cdots, \lambda_n$, respectively. \\
+	\\
+	($\Leftarrow$) Similarly, let $D = \begin{bmatrix}
+	\lambda_1 & 0 & \cdots & 0 \\
+	0 & \lambda_2 & \cdots & 0 \\
+	\vdots & \vdots & & \vdots \\
+	0 & 0 & \cdots & \lambda_n
+	\end{bmatrix}$ and let $P = \begin{bmatrix}
+	\textbf{p}_1 & \textbf{p}_2 & \cdots & \textbf{p}_n
+	\end{bmatrix}$, where $P$ is invertible. Since $\textbf{p}_1, \cdots, \textbf{p}_n$ are eigenvectors of $A$ with corresponding eigenvalue $\lambda_1, \cdots, \lambda_n$, $AP = PD$. Also, $P$ is invertible since columns of $P$ are linearly independent. Therefore, $D = \inv{P}AP$.
+\end{proof}
+
+\begin{theorem}
+	Let $ A $ be an \nbyn matrix and let $\lambda_1, \cdots, \lambda_k$ be distinct eigenvalues of $ A $. If $ \mathcal{B}_i $ is a basis for the eigenspace $ E_{\lambda_i} $, then $ \mathcal{B}=\mathcal{B}_{1}\cup\mathcal{B}_{2}\cup\cdots\mathcal{B}_{k} $ (i.e., the total collection of basis vectors for all of the eigenspaces) is linearly independent.
+\end{theorem}
+\begin{proof}
+	Let $\mathcal{B}_i = \{ \textbf{v}_{i1}, \textbf{v}_{i2}, \cdots, \textbf{v}_{in_i}\}$, for $i$ from 1 to $k$. Consider the equation \begin{equation*}
+		c_{11}\textbf{v}_{11} + \cdots + c_{1n_1}\textbf{v}_{1n_1} + \cdots + c_{k1}\textbf{v}_{k1} + \cdots + c_{kn_k}\textbf{v}_{kn_k} = \textbf{0}
+	\end{equation*}
+	Let $\textbf{x}_i = c_{i1}\textbf{v}_{i1} + \cdots + c_{in_i} \textbf{v}_{in_i}$, then $\textbf{x}_1 + \cdots + \textbf{x}_k = \textbf{0}$. Since $\textbf{x}_i \in $ span($\mathcal{B}_i$), $\textbf{x}_i$ is either an eigenvector of $A$ corresponding to $\lambda_i$ or a zero vector. By Theorem 4.20, the eigenvectors corresponding to distinct eigenvalues should be linear independent. Thus, $\textbf{x}_1 + \cdots + \textbf{x}_k = \textbf{0}$ gives $\textbf{x}_1 = \cdots = \textbf{x}_k = \textbf{0}$. (If at least one of $\textbf{x}_1, \cdots, \textbf{x}_k$ is nonzero, then a nontrivial solution for the equation exists so that it contradicts with the linear independence of the eigenvectors.) Since the vectors in each $\mathcal{B}_i$ are linear independent, all $c_{ij}$ should be zero. Therefore, $\mathcal{B}$ is a set of linearly independent vectors.
+\end{proof}
+
+\begin{theorem}
+	If $ A $ is an \nbyn matrix with $ n $ distinct eigenvalues, then $ A $ is diagonalizable.
+\end{theorem}
+\begin{proof}
+	By Theorem 4.20, $n$ eigenvectors of $A$ corresponding to $n$ distinct eigenvalues should be linearly independent. Therefore, by Theorem 4.23, $A$ is diagonalizable.
+\end{proof}
+
+\begin{lemma}
+	If $ A $ is \nbyn matrix, for each eigenvalues,
+	$$ \text{(geometric multiplicity)} \leq \text{(algebraic multiplicity)} $$
+\end{lemma}
+\begin{proof}
+	Suppose that $\lambda_0$ is an eigenvalue of $A$ with geometric multiplicity $p$. Then $\dim{E_{\lambda_0}} = p$, so let $\mathcal{B} = \{\textbf{v}_1, \cdots, \textbf{v}_p\}$ be a basis for $E_{\lambda_0}$. \\
+	
+	Let $Q$ be a invertible \nbyn matrix which has $\textbf{v}_1, \cdots, \textbf{v}_p$ at its first $p$ columns, so \begin{equation*}
+		Q = \begin{bmatrix}
+		\textbf{v}_1 & \cdots & \textbf{v}_p & \textbf{v}_{p+1} & \cdots & \textbf{v}_n
+		\end{bmatrix} = \begin{bmatrix}
+		U & V
+		\end{bmatrix}
+	\end{equation*} where $U$ is an $n \times p$ matrix and $V$ is an $n \times (n-p)$ matrix. Let $\inv{Q} = \begin{bmatrix}
+		C \\ D
+	\end{bmatrix}$, where $C$ is a $p \times n$ matrix and $D$ is an $(n-p) \times n$ matrix. Then \begin{align*}
+		\begin{bmatrix}
+			I_p & O \\ O & I_{n-p}
+		\end{bmatrix} = I_n = \inv{Q}Q = \begin{bmatrix}
+			C \\ D
+		\end{bmatrix} \begin{bmatrix}
+			U & V
+		\end{bmatrix} = \begin{bmatrix}
+			CU & CV \\ DU & DV
+		\end{bmatrix}
+	\end{align*} Thus, $CU = I_p$, $CV = O$, $DU = O$, and $DV = I_{n-p}$. \\
+	
+	Since $AU = A\begin{bmatrix}
+		\textbf{v}_1 & \textbf{v}_2 & \cdots & \textbf{v}_p
+	\end{bmatrix} = \begin{bmatrix}
+		A\textbf{v}_1 & A\textbf{v}_2 & \cdots & A\textbf{v}_p
+	\end{bmatrix} = \begin{bmatrix}
+		\lambda_0\textbf{v}_1 & \lambda_0\textbf{v}_2 & \cdots & \lambda_0\textbf{v}_p
+	\end{bmatrix} = \lambda_0 U$, \begin{align*}
+		\inv{Q}AQ = \begin{bmatrix}
+			C \\ D
+		\end{bmatrix}A\begin{bmatrix}
+			U & V
+		\end{bmatrix} = \begin{bmatrix}
+			CAU & CAV \\ DAU & DAV
+		\end{bmatrix} = \begin{bmatrix}
+			\lambda_0 CU & CAV \\ \lambda_0 DU & DAV
+		\end{bmatrix} = \begin{bmatrix}
+			\lambda_0 I_p & CAV \\ O & DAV
+		\end{bmatrix}
+	\end{align*} which is a block upper triangular matrix, so by Exercise 4.2 69 the characteristic polynomial of $\inv{Q}AQ$ is, \begin{align*}
+		\det(A - \lambda_0 I) = \det{(\inv{Q}AQ - \lambda_0 I)} &= \begin{vmatrix}
+			(\lambda_0 - \lambda)I_p & CAV \\ O & DAV - \lambda I_{n-p}
+		\end{vmatrix} \\
+		&= (\det{(\lambda_0 - \lambda)I_p})(\det{(DAV - \lambda I_{n-p})}) \\
+		&= (\lambda_0 - \lambda)^{p}(\det{(DAV - \lambda I_{n-p})})
+	\end{align*}
+	Therefore, algebraic multiplicity of $\lambda_0$ is at least $p$.
+\end{proof}
+
+\begin{theorem}[The Diagonalization Theorem]
+	Let $ A $ be an \nbyn matrix whose distinct eigenvalues are \lamk. The following statements are equivalent : 
+	\begin{enumerate}
+		\item $ A $ is diagonalizable.
+		\item The union $ \mathcal{B} $ of the bases of the eigenspaces of $ A $(as in Theorem 4.24) contains $ n $ vectors.
+		\item The algebraic multiplicity of each eigenvalue equals its geometric multiplicity.
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	(a $\Rightarrow$ b) Suppose that $A$ is diagonalizable, then $A$ has $n$ linearly independent eigenvectors by Theorem 4.23. If $n_i$ vectors of these $n$ eigenvectors correspond to the eigenvalue $\lambda_i$, the basis $\mathcal{B}_i$ for the eigenspace $E_{\lambda_i}$ should have at least $n_i$ vectors. Thus, $\mathcal{B} = \mathcal{B}_1 \cup \mathcal{B}_2 \cup \cdots \cup \mathcal{B}_k$ contains at least $n_1 + n_2 + \cdots + n_k = n$ vectors. By Theorem 4.24, $\mathcal{B}$ is a linearly independent set of vectors in \Rn, so it has at most $n$ vectors. Therefore, $\mathcal{B}$ has exactly $n$ vectors. \\
+	
+	(b $\Rightarrow$ a) By Theorem 4.24, the union of the bases for the eigenspaces is a linearly independent set of vectors. Since $\mathcal{B}$ has exactly $n$ vectors, $A$ has $n$ linearly independent eigenvectors. Therefore, $A$ is diagonalizable by Theorem 4.23. \\
+	
+	(b $\Rightarrow$ c) Let the algebraic multiplicity of $\lambda_1, \lambda_2, \cdots, \lambda_k$ be $m_1, m_2, \cdots, m_k$. By Theorem 4.26, the geometric multiplicity of each eigenvalue is lesser or equal to the algebraic multiplicity. Thus, \begin{align*}
+		n = \dim{E_{\lambda_1}} + \dim{E_{\lambda_2}} + \cdots + \dim{E_{\lambda_k}} &\le m_1 + m_2 + \cdots + m_k = n \\
+		\therefore (m_1 - \dim{E_{\lambda_1}}) + \cdots &+ (m_k - \dim{E_{
+				\lambda_k}}) = 0
+	\end{align*}
+	Therefore, the algebraic multiplicity and the geometric multiplicity (which is the dimension of eigenspace corresponding to the eigenvalue) should be the same. \\
+	
+	(c $\Rightarrow$ b) Let the algebraic multiplicity of $\lambda_1, \lambda_2, \cdots, \lambda_k$ be $m_1, m_2, \cdots, m_k$. Then $\mathcal{B}$ has $\dim{E_{\lambda_2}} + \cdots + \dim{E_{\lambda_k}} = m_1 + m_2 + \cdots + m_k = n$ vectors.
+	\end{proof}
+\iffalse
+\section{Solutions of Exercises from Chapter 4}
+\textbf{(4.1 35 + 4.1 36 + 4.1 37) : Eigenvalues and Characteristic Equations of $2 \times 2$ matrices} \\
+\textbf{35(a)} Let $A = \begin{bmatrix}
+	a & b \\ c & d
+\end{bmatrix}$, then tr($A$) $= a + d$, and $\det{A} = ad-bc$.\\
+The eigenvalues of $A$ are the solutions of the characteristic equation of $A$, which is \begin{align*}
+	\det{(A - \lambda I)} = \begin{vmatrix}
+		a - \lambda & b \\ c & d - \lambda
+	\end{vmatrix} &= (a - \lambda)(d-\lambda) - bc \\
+	 &= \lambda^2 - (a+d)\lambda + (ad - bc) = \lambda^2 - \textnormal{tr}(A)\lambda + \det{A} = 0
+\end{align*}
+\textbf{35(b)} The solution of the characteristic equation of $A$, $\lambda^2 - (a+d)\lambda + (ad - bc) = 0$, is given as \begin{align*}
+	\lambda &= \frac{1}{2}((a + d) \pm \sqrt{(a + d)^2 - 4(ad - bc)}) \\
+	&= \frac{1}{2}((a + d) \pm \sqrt{(a - d)^2 + 4bc})
+\end{align*}
+\textbf{35(c)} Since $\lambda_1, \lambda_2$ are the solutions of $\lambda^2 - \textnormal{tr}(A)\lambda + \det{A}$, $\lambda_1 + \lambda_2 = \textnormal{tr}(A)$ and $\lambda_1\lambda_2 = \det{A}$. \\
+
+\textbf{36(a)(b)(c}) Since the eigenvalues of $A$ are the solutions of $\lambda^2 - \textnormal{tr}(A)\lambda + \det{A}$, the condition is given from the determinant of the quadratic equation. Therefore, \begin{align*}
+	D &= (a+d)^2 - 4(ad - bc) \\ &= (a-d)^2 + 4bc \begin{cases}
+		> 0 \mbox{ then $A$ has two distinct real eigenvalues. } \\
+		= 0 \mbox{ then $A$ has one real eigenvalue. } \\
+		< 0 \mbox{ then $A$ has two distinct complex eigenvalues. }
+	\end{cases}
+\end{align*}
+\textbf{37} Exercise 4.1 35(a) gives that the characteristic polynomial of $A = \begin{bmatrix}
+	a & b \\ 0 & d
+\end{bmatrix}$ is $\lambda^2 - (a + d)\lambda + ad = 0$. Therefore, the eigenvalues of $A$ are $\lambda = a$ and $\lambda = d$. \\
+
+\textbf{(4.1 38)} \\
+From the equation given from Exercise 4.1 35(b), the eigenvalues of $A = \begin{bmatrix}
+	a & b \\ -b & a
+\end{bmatrix}$ are \begin{align*}
+	\lambda &= \frac{1}{2}(2a \pm \sqrt{-4b^2}) = a \pm bi
+\end{align*}
+
+(i) If $b = 0$, $\lambda = a$ is the only eigenvalue of $A$. The eigenspace $E_0$ is equal to the null($A - aI$) = null($O$), which is equivalent to $\mathbb{C}^2$. \\
+
+(ii) If $b \neq 0$, then $A$ has two distinct eigenvalues $\lambda_1 = a + bi$ and $\lambda_2 = a - bi$. The eigenspace $E_{a + bi}$ is equal to the null space of $A - (a+bi)I = \begin{bmatrix}
+	-bi & b \\ -b & -bi
+\end{bmatrix}$. The RREF of $\begin{bmatrix}
+-bi & b \\ -b & -bi
+\end{bmatrix}$ is $\begin{bmatrix}
+	1 & i \\ 0 & 0
+\end{bmatrix}$ so $\left \{ \begin{bmatrix}
+	1 \\ i
+\end{bmatrix} \right \}$ forms basis for null($A - (a+bi)I$) = $E_{a+bi}$. \\
+Similarly, the eigenspace $E_{a-bi}$ is equal to the null space of $A - (a - bi)I = \begin{bmatrix}
+	bi & b \\ -b & bi
+\end{bmatrix}$, whose RREF is $\begin{bmatrix}
+	1 & -i \\ 0 & 0
+\end{bmatrix}$. Thus, $\left \{ \begin{bmatrix}
+	i \\ 1
+\end{bmatrix} \right \}$ forms basis for null($A - (a - bi)I$) = $E_{a-bi}$. \\
+
+\textbf{(4.2 53)} \\
+For $n \times n$ matrices $A$ and $B$,
+\begin{equation*}
+	\det{(AB)} = (\det{A})(\det{B}) = (\det{B})(\det{A}) = \det{(BA)}
+\end{equation*}
+\textbf{(4.2 54)} \\
+For $n \times n$ matrices $A$ and $B$, \begin{equation*}
+	\det{(\inv{B}AB)} = (\det{\inv{B}})(\det{A})(\det{B}) = (\frac{1}{\det{B}})(\det{A})(\det{B}) = \det{A}
+\end{equation*}
+\textbf{(4.2 65)} \\
+For $n \times n$ invertible matrix $A$, Theorem 4.12 states that \begin{equation*}
+	\inv{A} = (\frac{1}{\det{A}})\adj{A} \mbox{ and } A = \inv{(\inv{A})} = (\frac{1}{\det{\inv{A}}})\adj{(\inv{A})} = (\det{A})\adj{(\inv{A})}
+\end{equation*} Therefore, \begin{align*}
+	\inv{(\adj{A})} = \inv{((\det{A})\inv{A})} = (\frac{1}{\det{A}})\inv{(\inv{A})} = (\frac{1}{\det{A}})A = \adj{(\inv{A})}
+\end{align*}
+\textbf{(4.2 66)} \\
+For $n \times n$ matrix $A$, \\
+(i) If $A$ is invertible, by Theorem 4.7 and Theorem 4.12, \begin{align*}
+	\det{(\adj{A})} = \det{((\det{A})\inv{A})} = (\det{A})^n(\frac{1}{\det{A}}) = (\det{A})^{n-1}
+\end{align*}
+(ii) If $A$ is not invertible, by the Extra Theorem (see page 12), \begin{equation*}
+	A(\adj{A}) = (\det{A})I_n
+\end{equation*} Since $\det{A} = 0$, $A(\adj{A}) = O$. \\
+
+(i) If $A \neq O$, suppose that $\adj{A}$ is invertible. Then $A = A(\adj{A})\inv{(\adj{A})} = O\inv{(\adj{A})} = O$, which is a contradiction. Therefore, $\adj{A}$ is not invertible. \\
+
+(ii) If $A = O$, $\adj{A} = O$ so $\adj{A}$ is not invertible. \\
+
+Since $\adj{A}$ is not invertible, by F.T.I.M, \begin{equation*}
+	\det{(\adj{A})} = 0 = (\det{A})^{n-1}
+\end{equation*}
+\textbf{(4.2 69)} \\
+We prove the proposition by mathematical induction over the size of $P = [p_{ij}]$. \\
+
+(i) If $P$ is a $1 \times 1$ matrix, then by the Laplace Expansion Theorem, the cofactor expansion along the first column gives \begin{equation*}
+	\det{A} = p_{11}(\det{S}) = (\det{P})(\det{S})
+\end{equation*} So the proposition holds. \\
+
+(ii) Suppose that every matrices that can be partitioned as $\begin{bmatrix}
+	P & Q \\ O & S
+\end{bmatrix}$, where $P$ is a $n \times n$ matrix, has its determinant as $(\det{P})(\det{S})$. \\
+
+Let $A = \begin{bmatrix}
+	P & Q \\ O & S
+\end{bmatrix}$, where $P=[p_{ij}]$ is a $(n+1) \times (n+1)$ matrix. By the Laplace Expansion Theorem, the cofactor expansion along the first column of $A$ gives \begin{equation*}
+	\det{A} = \sum_{k=1}^{n+1}p_{k1}(-1)^{1+k}\begin{vmatrix}
+		P_{k1} & Q_k' \\ O & S
+	\end{vmatrix}
+\end{equation*}
+where $Q_k'$ is a matrix obtained by removing the $k$th row of $Q$. Since $P_{k1}$ is an $n \times n$ matrix, the inductive hypothesis gives \begin{align*}
+	\det{A} &= \sum_{k=1}^{n+1}p_{k1}(-1)^{1+k}\begin{vmatrix}
+		P_{k1} & Q_k' \\ O & S
+	\end{vmatrix} =  \sum_{k=1}^{n+1}p_{k1}(-1)^{1+k}(\det{P_{k1}})(\det{S}) \\
+	&= (\det{S})\sum_{k=1}^{n+1}p_{k1}(-1)^{1+k}(\det{P_{k1}})
+\end{align*}
+Again, $\sum_{k=1}^{n+1}p_{k1}(-1)^{1+k}(\det{P_{k1}})$ is the cofactor expansion of $P$ along the first column. Therefore, \begin{equation*}
+	\det{A} = (\det{S})(\det{P})
+\end{equation*}
+\textbf{(4.3 19)} \\
+(a) The Laplace Expansion Theorem gives that for any square matrix $A$, $\det{A} = \det{A^T}$. The characteristic polynomial of $A$ is equal to $\det{(A - \lambda I)}$, and the characteristic polynomial of $A^T$ is equal to $\det{(A^T - \lambda I)} = \det{(A^T - \lambda I^T)} = \det{(A - \lambda I)^T} = \det{(A - \lambda I)}$. Therefore, the characteristic polynomial of $A$ and $A^T$ are the same. \\
+
+(b) Let $A = \begin{bmatrix}
+	1 & 1 \\ 2 & 2
+\end{bmatrix}$, then the characteristic polynomial of $A$ is given by $\lambda^2 - 3\lambda$, so the eigenvalues of $A$ and $A^T$ are $\lambda = 0, \lambda = 3$. \\
+
+First, consider the eigenspaces of $A$. $E_0$ = null($A$), so $\left \{ \begin{bmatrix}
+	1 \\ -1
+\end{bmatrix} \right \}$ forms the basis for $E_0$. $E_3$ = null($A - 3I)$, so $\left \{ \begin{bmatrix}
+	1 \\ 2
+\end{bmatrix} \right \}$ forms the basis for $E_3$.
+
+Now consider the eigenspaces of $A^T$. $E_0$ = null($A^T$), so $\left \{  \begin{bmatrix}
+	1 \\ -2
+\end{bmatrix} \right \}$ forms the basis for $E_0$. $E_3$ = null($A^T - 3I$), so $\left \{  \begin{bmatrix}
+	1 \\ 1
+\end{bmatrix} \right \}$ forms the basis for $E_3$. \\
+
+This example shows that the eigenvalues of $A$ and $A^T$ are the same, but the eigenspaces could be different. \\
+
+\textbf{(4.3 22)} \\
+Suppose that $\textbf{v}$ is an eigenvector of $A$ with corresponding eigenvalue $\lambda$, then $A\textbf{v} = \lambda\textbf{v}$. For any scalar $c$, \begin{align*}
+	(A - cI)\textbf{v} = A\textbf{v} - cI\textbf{v} = \lambda\textbf{v} - c\textbf{v} = (\lambda - c)\textbf{v}
+\end{align*}
+Therefore, $\textbf{v}$ is an eigenvector of $A - cI$ with corresonding eigenvalue $\lambda - c$. \\
+
+\textbf{(4.3 24)} \\
+(a)(b) Let $A = \begin{bmatrix}
+	1 & 0 \\ 0 & 0
+\end{bmatrix}$ and $B = \begin{bmatrix}
+	0 & 0 \\ 0 & 1
+\end{bmatrix}$, then $\lambda = 1$ is an eigenvalue of $A$ with corresponding eigenvector $\begin{bmatrix}
+	1 \\ 0
+\end{bmatrix}$, and it is also an eigenvalue of $B$ with corresponding eigenvector $\begin{bmatrix}
+	0 \\ 1
+\end{bmatrix}$.
+However, $1 + 1 = 2$ is not an eigenvalue of $A+B = \begin{bmatrix}
+	1 & 0 \\ 0 & 1
+\end{bmatrix}$, since $\begin{bmatrix}[c|c]
+	A + B - 2I & \textbf{0}
+\end{bmatrix} = \begin{bmatrix}[cc|c]
+	-1 & 0 & 0 \\ 0 & -1 & 0
+\end{bmatrix}$ only has the trivial solution. \\
+Also, $1 \times 1 = 1$ is not an eigenvalue of $AB = O$, since $\begin{bmatrix}[c|c]
+	AB - I & \textbf{0}
+\end{bmatrix} = \begin{bmatrix}[cc|c]
+	-1 & 0 & 0 \\ 0 & -1 & 0
+\end{bmatrix}$ only has the trivial solution. \\
+
+(c) Suppose that $\lambda$ is an eigenvalue of $A$ with corresponding eigenvector $\textbf{x}$, and $\mu$ is an eigenvalue of $B$ with corresponding eigenvector $\textbf{x}$. Then \begin{equation*}
+	(A+B)\textbf{x} = A\textbf{x} + B\textbf{x} = \lambda\textbf{x} + \mu\textbf{x} = (\lambda + \mu)\textbf{x}
+\end{equation*} so $\lambda + \mu$ is an eigenvalue of $A+B$. Also, \begin{equation*}
+	AB\textbf{v} = A(\mu\textbf{v}) = \mu(A\textbf{v}) = \mu(\lambda\textbf{v}) = (\lambda\mu)\textbf{v}
+\end{equation*} so $\lambda\mu$ is an eigenvalue of $AB$. \\
+
+\textbf{(4.3 28, 4.3 29 + 4.3 32) : Companion Matrices of Polynomials} \\
+For a polynomial $p(x) = x^n + a_{n-1}x^{n-1} + \cdots + a_1x + a_0$, the companion matrix of $p(x)$ is denoted by $C(p)$, and defined as \begin{equation*}
+	C(p) = \begin{bmatrix}
+		-a_{n-1} & -a_{n-2} & \cdots & -a_1 & -a_0 \\
+		1 & 0 & \cdots & 0 & 0 \\
+		\vdots & \vdots & & \vdots & \vdots \\
+		0 & 0 & \cdots & 0 & 0 \\
+		0 & 0 & \cdots & 1 & 0
+	\end{bmatrix}
+\end{equation*}
+
+\textbf{28(a)} The companion matrix of $p(x) = x^2 + ax + b$ is \begin{equation*}
+	C(p) = \begin{bmatrix}
+		-a & -b \\ 1 & 0
+	\end{bmatrix}
+\end{equation*} Therefore, the characteristic polynomial of $C(p)$ is given as \begin{align*}
+	\vert C(p) - \lambda I \vert &= \begin{vmatrix}
+		-a-\lambda & -b \\ 1 & -\lambda
+	\end{vmatrix} \\
+	&= \lambda(a + \lambda) + b = \lambda^2 + a\lambda + b
+\end{align*}
+\textbf{28(b}) Suppose that $\lambda$ is an eigenvalue of $C(p)$. By 28(a), $\lambda^2 + a\lambda + b = 0$. Then, \begin{align*}
+	C(p)\begin{bmatrix}
+		\lambda \\ 1
+	\end{bmatrix} = \begin{bmatrix}
+		-a & -b \\ 1 & 0
+	\end{bmatrix}\begin{bmatrix}
+		\lambda \\ 1
+	\end{bmatrix} = \begin{bmatrix}
+		-a\lambda -b \\ \lambda
+	\end{bmatrix} = \begin{bmatrix}
+		\lambda^2 \\ \lambda
+	\end{bmatrix} = \lambda \begin{bmatrix}
+		\lambda \\ 1
+	\end{bmatrix}
+\end{align*}
+Therefore, $\begin{bmatrix}
+	\lambda \\ 1
+\end{bmatrix}$ is an eigenvector of $C(p)$ corresponding to $\lambda$. \\
+
+\textbf{29(a)} The companion matrix of $p(x) = x^3 + ax^2 + bx + c$ is \begin{equation*}
+	C(p) = \begin{bmatrix}
+		-a & -b & -c \\ 1 & 0 & 0 \\ 0 & 1 & 0
+	\end{bmatrix}
+\end{equation*} Therefore, the characteristic polynomial of $C(p)$ is given as \begin{align*}
+	\vert C(p) - \lambda I \vert &= \begin{vmatrix}
+		-a-\lambda & -b & -c \\ 1 & -\lambda & 0 \\ 0 & 1 & -\lambda
+	\end{vmatrix} \\
+	&= -(a+\lambda)\begin{vmatrix}
+		-\lambda & 0 \\ 1 & -\lambda
+	\end{vmatrix} - \begin{vmatrix}
+		-b & -c \\ 1 & -\lambda
+	\end{vmatrix} \\
+	&= \-\lambda^2(a+\lambda)-(b\lambda + c) = -(\lambda^3 + a\lambda^2 + b\lambda + c)
+\end{align*}
+\textbf{29(b)} Suppose that $\lambda$ is an eigenvalue of $C(p)$. By 29(a), $\lambda^3 + a\lambda^2 + b\lambda + c = 0$. Then, \begin{align*}
+	C(p)\begin{bmatrix}
+		\lambda^2 \\ \lambda \\ 1
+	\end{bmatrix} = \begin{bmatrix}
+		-a & -b & -c \\ 1 & 0 & 0 \\ 0 & 1 & 0
+	\end{bmatrix}\begin{bmatrix}
+		\lambda^2 \\ \lambda \\ 1
+	\end{bmatrix} = \begin{bmatrix}
+		-(a\lambda^2 + b\lambda + c) \\ \lambda^2 \\ \lambda
+	\end{bmatrix} = \begin{bmatrix}
+		\lambda^3 \\ \lambda^2 \\ \lambda^2
+	\end{bmatrix} = \lambda \begin{bmatrix}
+		\lambda^2 \\ \lambda \\ 1
+	\end{bmatrix}
+\end{align*}
+Therefore, $\begin{bmatrix}
+	\lambda^2 \\ \lambda \\ 1
+\end{bmatrix}$ is an eigenvector of $C(p)$ corresponding to $\lambda$. \\
+
+\textbf{32(a)} We prove the proposition using the mathematical induction on the degree of the polynomial. \\
+
+(i) If the degree of $p(x)$ is 2, the proposition holds. (28(a) gives the proof.) \\
+
+(ii) Suppose that if the degree of $p(x)$ is $n$, the companion matrix $C(p)$ of $p(x)$ has characteristic polynomial $(-1)^np(x)$. \\
+Let $p(x) = x^{n+1} + a_nx^n + \cdots + a_1x + a_0$. Then the companion matrix of $p(x)$ is \begin{equation*}
+	C(p) = \begin{bmatrix}
+		-a_n & -a_{n-1} & \cdots & -a_1 & a_0 \\
+		1    & 0        & \cdots & 0    & 0   \\
+		\vdots & \vdots &        & \vdots & \vdots \\
+		0    & 0        & \cdots & 1      & 0
+	\end{bmatrix}
+\end{equation*}
+Therefore, the characteristic polynomial of $C(p)$ is given as \begin{align*}
+	\vert C(p) - \lambda I \vert &= \begin{vmatrix}
+		-a_n-\lambda & -a_{n-1} & \cdots & -a_1 & {\color{red}a_0} \\
+		1 & -\lambda & \cdots & 0 & {\color{red}0} \\
+		\vdots & \vdots & & \vdots & {\color{red}\vdots} \\
+		0 & 0 & \cdots & -\lambda & {\color{red}0} \\
+		0 & 0 & \cdots & 1 & {\color{red}-\lambda}
+	\end{vmatrix} \\
+	&= a_0(-1)^{n+1}\begin{vmatrix}
+		1 & -\lambda & \cdots & 0 & 0 \\
+		0 & 1        & \cdots & 0 & 0 \\
+		\vdots & \vdots & & \vdots & \vdots \\
+		0 & 0 & \cdots & 1 & -\lambda \\
+		0 & 0 & \cdots & 0 & 1
+	\end{vmatrix} + (-\lambda)(-1)^{2n}\begin{vmatrix}
+		-a_n-\lambda & -a_{n-1} & \cdots & -a_2 & -a_1 \\
+		1 & -\lambda & \cdots & 0 & 0 \\
+		\vdots & \vdots & & \vdots & \vdots \\
+		0 & 0 & \cdots & -\lambda & 0 \\
+		0 & 0 & \cdots & 1 & -\lambda
+	\end{vmatrix} \\
+	&= a_0(-1)^{n+1} -\lambda\begin{vmatrix}
+	-a_n-\lambda & -a_{n-1} & \cdots & -a_2 & -a_1 \\
+	1 & -\lambda & \cdots & 0 & 0 \\
+	\vdots & \vdots & & \vdots & \vdots \\
+	0 & 0 & \cdots & -\lambda & 0 \\
+	0 & 0 & \cdots & 1 & -\lambda
+	\end{vmatrix} = a_0(-1)^{n+1} - \lambda(*)
+\end{align*} where (*) is the determinant of the matrix above.
+Let $q(x) = \frac{1}{x}(p(x) - a_0) = x^n + a_nx^{n-1} + \cdots + a_2x + a_2$, then $(*)$ is the characteristic polynomial of $C(q)$. Since the degree of the $q(x)$ is $n$, by inductive hypothesis, $(*) = (-1)^nq(\lambda)$. Therefore, \begin{align*}
+	\vert C(p) - \lambda I \vert &= a_0(-1)^{n+1} - \lambda (-1)^n q(\lambda) \\
+	&= a_0(-1)^{n+1} - \lambda (-1)^n \frac{1}{\lambda}(p(\lambda) - a_0) \\
+	&= (-1)^{n+1}p(\lambda)
+\end{align*}
+By (i) and (ii), the proposition holds for all polynomials. \\
+
+\textbf{32(b)} Suppose that $\lambda$ is an eigenvalue of the companion matrix of $p(x) = x^n + a_{n-1}x^{n-1} + \cdots + a_1x + a_0$. By 32(a), $(-1)^{n+1}p(\lambda) = 0$, so $p(\lambda) = 0$. Then, \begin{align*}
+	C(p)\begin{bmatrix}
+		\lambda^{n-1} \\ \lambda^{n-2} \\ \vdots \\ \lambda \\ 1
+	\end{bmatrix} &= \begin{bmatrix}
+		-a_{n-1} & -a_{n-2} & \cdots & -a_1 & a_0 \\
+		1    & 0        & \cdots & 0    & 0   \\
+		\vdots & \vdots &        & \vdots & \vdots \\
+		0    & 0        & \cdots & 1      & 0
+	\end{bmatrix}\begin{bmatrix}
+	\lambda^{n-1} \\ \lambda^{n-2} \\ \vdots \\ \lambda \\ 1
+	\end{bmatrix} \\
+	&= \begin{bmatrix}
+		-(a_{n-1}\lambda^{n-1} + \cdots + a_0) \\ \lambda^{n-1} \\ \vdots \\ \lambda^2 \\ \lambda
+	\end{bmatrix}
+	= \begin{bmatrix}
+		\lambda^n \\ \lambda^{n-1} \\ \vdots \\ \lambda^2 \\ \lambda
+	\end{bmatrix} = \lambda\begin{bmatrix}
+		\lambda^{n-1} \\ \lambda^{n-2} \\ \vdots \\ \lambda \\ 1
+	\end{bmatrix}
+\end{align*} Therefore, the given vector is an eigenvector of $C(p)$ corresponding to $\lambda$. \\
+
+\textbf{(4.3 39)} \\
+The characteristic polynomial of $A$ is given as \begin{align*}
+	\det{(A - \lambda I)} = \begin{vmatrix}
+		P - \lambda I & Q \\ O & S - \lambda I
+	\end{vmatrix}
+\end{align*} By Exercise 4.2 69, \begin{align*}
+	\begin{vmatrix}
+		P - \lambda I & Q \\ O & S - \lambda I
+	\end{vmatrix} = \vert P - \lambda I \vert \vert S - \lambda I \vert
+\end{align*} which are characteristic polynomials of $P$ and $S$. Therefore, \begin{equation*}
+	c_A(\lambda) = \det{(A - \lambda I)} = \det{(P - \lambda I)}\det{(S - \lambda I)} = c_P(\lambda)c_S(\lambda)
+\end{equation*}
+
+\textbf{(4.3 40)} \\
+Since the eigenvalues $\lambda_1, \cdots, \lambda_n$ are the solutions of the characteristic equation of $A$, \begin{equation*}
+	\det{(A - \lambda I)} = (-1)^n(\lambda - \lambda_1)\cdots(\lambda - \lambda_n)
+\end{equation*} So substituting $\lambda = 0$ gives $\det{A} = \lambda_1\lambda_2\cdots\lambda_n$. \\
+
+Next, consider the coefficient of $\lambda^{n-1}$ on $\det{(A - \lambda I)}$. \\
+
+\textbf{Claim :} If $A=[a_{ij}]$ is $n \times n$ matrix, the coefficient of $\lambda^{n-1}$ on $\det{(A - \lambda I)}$ is equal to its coefficient on $(a_{11} - \lambda)\cdots(a_{nn} - \lambda)$, which is $(-1)^{n-1}$tr($A$). \\
+
+We prove this claim by mathematical induction. \\
+
+(i) If $A$ is $1 \times 1$ matrix, $\det{(A - \lambda I)} = a_{11} - \lambda$, so the coefficient of $\lambda^0$ should be the same. \\
+
+(ii) Suppose that the claim holds for any $n \times n$ matrices. Let $A$ be a $(n+1) \times (n+1)$ matrix. Then
+\begin{align*}
+	\det{(A - \lambda I)} &= \begin{vmatrix}
+		a_{11} - \lambda & \cdots & a_{1,(n+1)} \\
+		\vdots & & \vdots \\
+		a_{(n+1),1} & \cdots & a_{(n+1),(n+1)} - \lambda
+	\end{vmatrix} \\
+	&= (a_{11} - \lambda)\det{(A - \lambda I)_{11}} + \sum_{i=2}^{n+1}a_{1i}(-1)^{1+i}\det{(A - \lambda I)_{1i}}
+\end{align*} Since $(A - \lambda I)_{1i}$ is a matrix obtained by removing the first row and $i$th column from $A - \lambda I$, its determinant cannot have terms of $\lambda^{n}$ or terms with higher degrees, if $i \neq 1$. Thus, the coefficient of $\lambda^{n}$ on $\det{(A - \lambda I)}$ is equal to its coefficient on $(a_{11} - \lambda)\det{(A - \lambda I)_{11}}$. \\
+
+Note that $(A - \lambda I)_{11} = A_{11} - \lambda I$ and $A_{11}$ is an $n \times n$ matrix, so by inductive hypothesis, the coefficient of $\lambda^{n-1}$ on $\det(A - \lambda I)_{11}$ is equal to its coefficient on $(a_{22} - \lambda)\cdots(a_{(n+1),(n+1)} - \lambda)$. Therefore, \begin{align*}
+	(a_{11} - \lambda)\det{(A - \lambda I)} &= (a_{11} - \lambda)\{ (-1)^n\lambda^n + (-1)^{n-1}(a_{22} + \cdots + a_{(n+1),(n+1))})\lambda^{n-1} + \cdots \} \\
+	&= (-1)^{n+1}\lambda^{n+1} + (-1)^n(a_{11} + a_{22} + \cdots +  a_{(n+1),(n+1)})\lambda^n + \cdots
+\end{align*}
+
+(i) and (ii) gives the proof for the claim. \\
+
+Since $\det{(A - \lambda I)} = (-1)^{n}(\lambda - \lambda_1)(\cdots)(\lambda - \lambda_n)$, the coefficient of $\lambda^{n-1}$ on both sides of the equation are \begin{equation*}
+	(-1)^{n-1}\textnormal{tr}(A) = (-1)^{n+1}(\lambda_1 + \cdots + \lambda_n)
+\end{equation*} Therefore, tr($A$) = $\lambda_1 + \cdots + \lambda_n$. \\
+
+\textbf{(4.3 41)} \\
+Let $A$ and $B$ be $n \times n$ matrix. By Exercise 4.3 40, tr($A + B$) is the sum of all the eigenvalues of $A+B$. Since tr($A + B$) = tr($A$) + tr($B$), the sum of all the eigenvalues of $A+B$ is equal to the sum of all the eigenvalues of $A$ and $B$. Also, $\det{(AB)}$ is the product of all the eigenvalues of $AB$. Since $\det{(AB)} = (\det{A})(\det{B})$, the product of all the eigenvalues of $AB$ is equal to the product of all the eigenvalues of $A$ and $B$. \\
+
+\textbf{(4.4 34)} \\
+Let $A$ and $B$ be invertible matrices. Since $BA = \inv{A}(AB)A$, $AB \sim BA$. \\
+
+\textbf{(4.4 35)} \\
+First we prove that tr($AB$) = tr($BA$). (which is at Exericse 3.2 45) If $A=[a_{ij}]$ and $B=[b_{ij}]$ are $n \times n$ matrices,  \begin{align*}
+	\textnormal{tr}(AB) &= \sum_{i=1}^{n}(AB)_{ii} \\
+	&= \sum_{i=1}^{n}\sum_{j=1}^{n}a_{ij}b_{ji} \\
+	&= \sum_{j=1}^{n}\sum_{i=1}^{n}b_{ji}a_{ij} \\
+	&= \sum_{j=1}^{n}(BA)_{jj} = \textnormal{tr}(BA)
+\end{align*}
+If $A$ and $B$ are similar, there exists an invertible matrix $P$ such that $B = \inv{P}AP$, so \begin{equation*}
+	\textnormal{tr}(B) = \textnormal{tr}(\inv{P}(AP)) = \textnormal{tr}((AP)\inv{P}) = \textnormal{tr}(A)
+\end{equation*}
+
+\textbf{(4.4 40)} \\
+If $A$ is similar to $B$, there exists an invertible matrix $P$ such that $B = \inv{P}AP$. Then \begin{equation*}
+	B^T = (\inv{P}AP)^T = P^TA^T(\inv{P})^T = \inv{(\inv{(P^T)})}A^T\inv{(P^T)}
+\end{equation*} where $\inv{(P^T)}$ is invertible. Therefore, $B^T$ is similar to $A^T$. \\
+
+\textbf{(4.4 41)} \\
+If $A$ is diagonalizable, then there exists a diagonal matrix $D$ which is similar to $A$. By Exercise 4.4 40, $A^T$ is also similar to $D^T = D$. Therefore, $A^T$ is diagonalizable. \\
+
+\textbf{(4.4 42)} \\
+If $A$ is diagonalizable, then there exists a diagonal matrix $D$ and an invertible matrix $P$ such that $\inv{P}AP = D$. Then $D$ is invertible and \begin{align*}
+	\inv{D} = \inv{(\inv{P}AP)} = \inv{P}\inv{A}\inv{(\inv{P})} = \inv{P}\inv{A}P
+\end{align*} where $\inv{D}$ is also a diagonal matrix. (Note that the diagonal entries of $D$ are nonzero, since they are eigenvalues of $A$ and they cannot be zero by Theorem 4.16.) Therefore, $\inv{A} \sim \inv{D}$ and $\inv{A}$ is diagonalizable. \\
+
+\textbf{(4.4 43)} \\
+Let $A$ be a diagonalizable matrix with single eigenvalue $\lambda$. Then $A$ is similar to a diagonal matrix with its diagonal entries as eigenvalues of $A$, which is $\lambda I$. Since there exists an invertible matrix $P$ such that $\lambda I = \inv{P}AP$, \begin{equation*}
+	A = P(\lambda I)\inv{P} = \lambda(PI\inv{P}) = \lambda I
+\end{equation*} Therefore, $A = \lambda I$. \\
+
+\textbf{(4.4 44)} \\
+($\Rightarrow$) Suppose that $\textbf{v}_1, \cdots, \textbf{v}_n$ are eigenvectors of both $A$ and $B$. Let $\lambda_{Ai}$ be an eigenvalue of $A$ corresponding to $\textbf{v}_i$, and $\lambda_{Bi}$ be an eigenvalue of $B$ corresponding to $\textbf{v}_i$, where $i = 1, 2, \cdots, n$. Then for any $\textbf{v}_i$, \begin{equation*}
+	AB\textbf{v}_i = A(\lambda_{Bi}\textbf{v}_i) = \lambda_{Bi}(A\textbf{v}_i) = (\lambda_{Ai}\lambda_{Bi})\textbf{v}_i = \lambda_{Ai}(B\textbf{v}_i) = B(\lambda_{Ai}\textbf{v}_i) = BA\textbf{v}_i
+\end{equation*} Thus $(AB - BA)\textbf{v}_i = \textbf{0}$  for $i = 1, 2, \cdots, n$. By Theorem 4.24, $\textbf{v}_1, \cdots, \textbf{v}_n$ are linearly independent. So for any $\textbf{x} \in \Rnn = \textnormal{span}(\textbf{v}_1, \cdots, \textbf{v}_n), (AB - BA)\textbf{x} = \textbf{0}$, which indicates that $AB - BA = O$. Therefore, $AB = BA$. \\
+
+($\Rightarrow$ 다른 증명) Suppose that $\textbf{v}_1, \cdots, \textbf{v}_n$ are eigenvalues of both $A$ and $B$, and let $P = \begin{bmatrix}
+	\textbf{v}_1 & \cdots & \textbf{v}_n
+\end{bmatrix}$. Since $A$ and $B$ have $n$ distinct eigenvalues, they are diagonalizable. Thus, there exist diagonal matrices $D_1, D_2$ such that $\inv{P}AP = D_1$ and $\inv{P}BP = D_2$. (Note that the diagonal entries of $D_1$ and $D_2$ will be the corresponding eigenvalues of $\textbf{v}_1, \cdots, \textbf{v}_n$) Since $D_1D_2 = D_2D_1$, \begin{equation*}
+	AB = (PD_1\inv{P})(PD_2\inv{P}) = PD_1D_2\inv{P} = PD_2D_1\inv{P} = (PD_2\inv{P})(PD_1\inv{P}) = BA
+\end{equation*}
+
+($\Leftarrow$) Suppose that $AB = BA$, and $\textbf{v}$ is an eigenvector of $A$ corresponding to $\lambda$. Then \begin{align*}
+	AB\textbf{v} = BA\textbf{v} = B(\lambda\textbf{v}) = \lambda(B\textbf{v})
+\end{align*} Also, $B\textbf{v} \neq \textbf{0}$ since $\textbf{v} \neq \textbf{0}$ and 0 is not an eigenvalue of $B$ as $B$ is invertible. Thus, $B\textbf{v}$ is also an eigenvector of $A$ corresponding to $\lambda$. Since $A$ has $n$ distinct eigenvalues, the geometric multiplicity of each eigenvalues should be 1. Therefore, $B\textbf{v} = k\textbf{v}$ for some nonzero scalar $k$, which indicates that $\textbf{v}$ is also an eigenvector of $B$. In other words, all eigenvectors of $ A $ is also an eigenvector of $ B $. Since $ A $ and $ B $ have $ n $ eigenvectors, we can conclude that they have same eigenvectors. \\
+
+\textbf{(4.4 45)} \\
+Since $A$ and $B$ are similar, their eigenvalues and characteristic polynomials are the same. Therefore, their algebraic multiplicities of each eigenvalues should be the same. \\
+
+\textbf{(4.4 46)} \\
+Let $A$ and $B$ be similar matrices. Then there exists an invertible matrix $P$ such that $B = \inv{P}AP$, so $PB = AP$ and $B\inv{P} = \inv{P}A$. Let $\textbf{u}$ be an eigenvector of $B$ corresponding to an eigenvalue $\lambda$. Then \begin{equation*}
+	AP\textbf{u} = PB\textbf{u} = P(\lambda\textbf{u}) = \lambda(P\textbf{v})
+\end{equation*} So $P\textbf{u}$ is an eigenvector of $A$ corresponding to $\lambda$. \\
+Let the eigenspace of $A$ corresponding to $\lambda$ be $E_\lambda(A)$, and the eigenspace of $B$ corresponding to $\lambda$ be $E_\lambda(B)$, then $\dim{E_{\lambda}(A)} \ge \dim{E_{\lambda}(B)}$. \\
+
+Similarly, let $\textbf{v}$ be an eigenvector of $A$ corresponding to an eigenvalue $\lambda$. Then \begin{equation*}
+	B\inv{P}\textbf{v} = \inv{P}A\textbf{v} = \inv{P}(\lambda\textbf{v}) = \lambda(\inv{P}\textbf{v})
+\end{equation*} So $\inv{P}\textbf{v}$ is an eigenvector of $B$ corresponding to $\lambda$. Thus, $\dim{E_{\lambda}(A)} \le \dim{E_{\lambda}(B)}$. \\
+
+Therefore, $\dim{E_{\lambda}(A)} = \dim{E_{\lambda}(B)}$. \\
+
+\textbf{(4.2 55 + 4.3 21 + 4.4 47) : Idempotent Matrices} \\
+\textbf{4.2 55} Suppose that $A$ is an idempotent matrix. Then \begin{equation*}
+	\det{(A^2)} = (\det{A})^2 = \det{A}
+\end{equation*} Therefore, $\det{A} = 0$ or $\det{A} = 1$. \\
+
+\textbf{4.3 21} Let $A$ be an idempotent matrix, and let $\lambda$ be an eigenvalue of $A$ with corresponding eigenvector $\textbf{v}$. Then \begin{align*}
+	A\textbf{v} = A^2\textbf{v} = A(A\textbf{v}) = A(\lambda\textbf{v}) = \lambda(A\textbf{v})
+\end{align*} so $(\lambda - 1)A\textbf{v} = \textbf{0}$. If $\lambda \neq 1$, $A\textbf{v} = \textbf{0} = 0\textbf{v}$ so $\lambda = 0$. Therefore, $\lambda = 0$ or $\lambda = 1$. \\
+
+\textbf{4.4 47} Let $A$ be a diagonalizable matrix such that every eigenvalue of $A$ is 0 or 1. Then there exists a diagonal matrix $D$ which is similar to $A$, and its diagonal entries should be eigenvalues of $A$. Thus, $D^2 = D$. There also exists an invertible matrix $P$ such that $\inv{P}AP = D$. Therefore, \begin{equation*}
+	A^2 = (PD\inv{P})(PD\inv{P}) = PD^2\inv{P} = PD\inv{P} = A
+\end{equation*} so $A$ is an idempotent matrix. \\
+
+\textbf{(4.2 56 + 4.3 20 + 4.4 48) : Nilpotent Matrices} \\
+\textbf{4.2 56} Suppose that $A$ is a nilpotent matrix. Then there exists $m$ such that $A^m = O$. Then \begin{equation*}
+	\det{A^m} = (\det{A})^m = \det{O} = 0
+\end{equation*} Therefore, $\det{A} = 0$. \\
+
+\textbf{4.3 20} For nilponent matrix $A$, there exists $m$ such that $A^m = O$. Suppose that $\lambda$ is an eigenvalue of $A$. By Theorem 4.18(a), $\lambda^m$ should be an eigenvalue of $A^m = O$, so $\lambda^m = 0$. Therefore, $\lambda = 0$. \\
+
+\textbf{4.4 48} Let $A$ be a nilpotent matrix which is diagonalizable. Then the eigenvalues of $A$ are all zero. Since $A$ is diagonalizable, there exists an diagonal matrix $D$ whose diagonal entries are eigenvalues of $A$, so $D = O$. There also exists an invertible matrix $P$ such that $\inv{P}AP = D = O$. Therefore, \begin{equation*}
+	A = PD\inv{P} = PO\inv{P} = O
+\end{equation*}
+\fi
